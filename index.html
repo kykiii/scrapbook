@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Private Love Page ❤️</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background: linear-gradient(to right, #ff9a9e, #fad0c4);
+            color: white;
+            overflow-x: hidden;
+        }
+
+        .container {
+            margin-top: 100px;
+            padding: 20px;
+        }
+
+        input {
+            padding: 10px;
+            border-radius: 8px;
+            border: none;
+            text-align: center;
+        }
+
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 10px;
+            background-color: white;
+            color: #ff6f91;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: #ffe6eb;
+        }
+
+        #mainContent {
+            display: none;
+        }
+
+        #typing {
+            margin-top: 20px;
+            min-height: 40px;
+            line-height: 1.6;
+        }
+
+        img {
+            margin-top: 20px;
+            max-width: 250px;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(255,255,255,0.5);
+        }
+
+        .heart {
+            position: absolute;
+            animation: fall 5s linear infinite;
+        }
+
+        @keyframes fall {
+            0% { transform: translateY(-10px); opacity: 1; }
+            100% { transform: translateY(100vh); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container" id="loginPage">
+    <h2>🔐 mau masuk yaa? wajib masukin password dulu kak✌🏻</h2>
+    <p>(Hint: Kiki🐒)</p>
+    <input type="password" id="passwordInput" placeholder="Masukkan password">
+    <br>
+    <button onclick="checkPassword()">Open 🤏🏻</button>
+</div>
+
+<div class="container" id="mainContent">
+    <h1>💖 Welcome My Love 💖</h1>
+    <div id="typing"></div>
+
+    <h3>📸 Upload Foto Kita</h3>
+    <input type="file" accept="image/*" onchange="previewImage(event)">
+    <br>
+    <img id="photoPreview" />
+
+    <div style="margin-top:30px;">
+        <iframe style="border-radius:12px"
+        src="https://open.spotify.com/embed/track/1R0a2iXumgCiFb7HEZ7gUE"
+        width="300"
+        height="80"
+        frameBorder="0"
+        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture">
+        </iframe>
+    </div>
+</div>
+
+<script>
+    const correctPassword = "greefast aisyana putri";
+    const text = `hai kak, perkenalkan aku kikii, i wanna u know. 
+Seperti kata tulus; Maafkan aku jatuh suka. 
+Bukan lagi rasa penasaran. 
+Bukan lagi iseng semata. 
+Aku beneran jatuh hati pada pemilik senyum manis itu. 
+
+Ini sudah sampai pada titik dimana kehadirannya menggeser banyak hal kecil dalam hidupku. 
+Aku mulai terang-terangan. 
+Bukan dengan kata-kata besar. 
+Bukan dengan janji. 
+Hanya kejujuran sederhana yang seharusnya tidak menakutkan. 
+
+Aku menyukai banyak hal, pantai, langit, motor, hujan, bintang dan yang banyak orang udah tau, kamu. 
+And I couldn't think of anything better for u than this 🤍
+
+Notes: jujur gue ga pinter merangkai kata kaya gini sih, but dicoba aja dulu.`;
+
+    let index = 0;
+
+    function checkPassword() {
+        const input = document.getElementById("passwordInput").value.trim().toLowerCase();
+        if (input === correctPassword) {
+            document.getElementById("loginPage").style.display = "none";
+            document.getElementById("mainContent").style.display = "block";
+            typeEffect();
+        } else {
+            alert("Passwordnya salah, coba lagi yaa cantik 🤏🏻");
+        }
+    }
+
+    // ✨ Smooth typing natural effect
+    function typeEffect() {
+        if (index < text.length) {
+            document.getElementById("typing").innerHTML += text.charAt(index);
+            index++;
+            let speed = 8 + Math.random() * 12; 
+            setTimeout(typeEffect, speed);
+        }
+    }
+
+    function previewImage(event) {
+        const reader = new FileReader();
+        reader.onload = function(){
+            const output = document.getElementById('photoPreview');
+            output.src = reader.result;
+        }
+        reader.readAsDataURL(event.target.files[0]);
+    }
+
+    // Efek hati jatuh
+    setInterval(() => {
+        const heart = document.createElement("div");
+        heart.classList.add("heart");
+        heart.innerHTML = "💖";
+        heart.style.left = Math.random() * 100 + "vw";
+        heart.style.fontSize = (Math.random() * 20 + 10) + "px";
+        document.body.appendChild(heart);
+
+        setTimeout(() => {
+            heart.remove();
+        }, 5000);
+    }, 400);
+</script>
+
+</body>
+</html>
