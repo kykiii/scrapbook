@@ -7,16 +7,37 @@
         body {
             margin: 0;
             padding: 0;
-            font-family: Arial, sans-serif;
+            font-family: 'Segoe UI', sans-serif;
             text-align: center;
-            background: linear-gradient(to right, #ff9a9e, #fad0c4);
-            color: white;
+            background: radial-gradient(circle at top, #0f172a, #020617);
+            color: #f1f5f9;
             overflow-x: hidden;
         }
 
+        /* Background glow */
+        body::before {
+            content: "";
+            position: fixed;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(255,0,150,0.15), transparent 70%);
+            top: -200px;
+            left: -200px;
+            filter: blur(120px);
+            z-index: -1;
+        }
+
         .container {
-            margin-top: 100px;
-            padding: 20px;
+            margin-top: 80px;
+            padding: 30px;
+            background: rgba(255,255,255,0.05);
+            backdrop-filter: blur(12px);
+            border-radius: 20px;
+            width: 90%;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+            box-shadow: 0 0 40px rgba(0,0,0,0.6);
         }
 
         input {
@@ -30,14 +51,16 @@
             padding: 10px 20px;
             border: none;
             border-radius: 10px;
-            background-color: white;
-            color: #ff6f91;
+            background: linear-gradient(135deg, #ec4899, #9333ea);
+            color: white;
             cursor: pointer;
             margin-top: 10px;
+            transition: 0.3s;
         }
 
         button:hover {
-            background-color: #ffe6eb;
+            transform: scale(1.05);
+            opacity: 0.9;
         }
 
         #mainContent {
@@ -46,26 +69,56 @@
 
         #typing {
             margin-top: 20px;
-            min-height: 40px;
-            line-height: 1.6;
+            min-height: 80px;
+            line-height: 1.8;
+            text-align: justify;
         }
 
         img {
             margin-top: 20px;
-            max-width: 250px;
+            max-width: 260px;
             border-radius: 15px;
-            box-shadow: 0 0 20px rgba(255,255,255,0.5);
+            box-shadow: 0 0 30px rgba(236,72,153,0.4);
         }
 
+        hr {
+            opacity: 0.2;
+        }
+
+        /* Floating particles */
+        .particle {
+            position: fixed;
+            background: rgba(255,255,255,0.15);
+            border-radius: 50%;
+            animation: floatUp linear infinite;
+            z-index: -1;
+        }
+
+        @keyframes floatUp {
+            from { transform: translateY(100vh); opacity: 0; }
+            to { transform: translateY(-10vh); opacity: 1; }
+        }
+
+        /* Hearts */
         .heart {
             position: absolute;
-            animation: fall 5s linear infinite;
+            animation: fall 6s linear infinite;
+            opacity: 0.4;
         }
 
         @keyframes fall {
-            0% { transform: translateY(-10px); opacity: 1; }
-            100% { transform: translateY(100vh); opacity: 0; }
+            0% { transform: translateY(-10px); }
+            100% { transform: translateY(100vh); }
         }
+
+        /* Scrapbook text */
+        .scrapbook-text {
+            margin-top: 30px;
+            opacity: 0.85;
+            line-height: 1.6;
+            text-align: justify;
+        }
+
     </style>
 </head>
 <body>
@@ -89,13 +142,21 @@
 
     <div style="margin-top:30px;">
         <iframe style="border-radius:12px"
-        src="https://open.spotify.com/embed/track/5Y6nVaayzitvsD5F7nr3DV"
+        src="https://open.spotify.com/embed/track/1R0a2iXumgCiFb7HEZ7gUE"
         width="300"
         height="80"
         frameBorder="0"
         allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture">
         </iframe>
     </div>
+
+    <hr>
+
+    <h2>📖 Little Memories</h2>
+    <p class="scrapbook-text">
+        Setiap obrolan kecil, setiap tawa receh, setiap momen random itu sekarang punya arti.
+        Dan mungkin ini sederhana, tapi buat aku berarti.
+    </p>
 </div>
 
 <script>
@@ -130,7 +191,6 @@ Notes: jujur gue ga pinter merangkai kata kaya gini sih, but dicoba aja dulu.`;
         }
     }
 
-    // ✨ Smooth typing natural effect
     function typeEffect() {
         if (index < text.length) {
             document.getElementById("typing").innerHTML += text.charAt(index);
@@ -149,7 +209,7 @@ Notes: jujur gue ga pinter merangkai kata kaya gini sih, but dicoba aja dulu.`;
         reader.readAsDataURL(event.target.files[0]);
     }
 
-    // Efek hati jatuh
+    // Hearts jatuh
     setInterval(() => {
         const heart = document.createElement("div");
         heart.classList.add("heart");
@@ -160,8 +220,18 @@ Notes: jujur gue ga pinter merangkai kata kaya gini sih, but dicoba aja dulu.`;
 
         setTimeout(() => {
             heart.remove();
-        }, 5000);
+        }, 6000);
     }, 400);
+
+    // Ambient particles
+    for (let i = 0; i < 40; i++) {
+        const particle = document.createElement("div");
+        particle.classList.add("particle");
+        particle.style.width = particle.style.height = Math.random() * 4 + "px";
+        particle.style.left = Math.random() * 100 + "vw";
+        particle.style.animationDuration = (5 + Math.random() * 10) + "s";
+        document.body.appendChild(particle);
+    }
 </script>
 
 </body>
